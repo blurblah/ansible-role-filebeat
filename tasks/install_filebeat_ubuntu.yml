@@ -1,0 +1,16 @@
+---
+- name: Install java8 on ubuntu
+  apt:
+    name: openjdk-8-jdk
+    update_cache: yes
+
+- name: Add gpg-key on ubuntu
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: Add repository on ubuntu
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
+
+- name: Install filebeat on ubuntu
+  apt: name=filebeat

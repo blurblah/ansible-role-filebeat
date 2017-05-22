@@ -1,0 +1,10 @@
+filebeat.prospectors:
+- input_type: log
+  paths:
+{% for log in log_list %}
+    - {{ log }}
+{% endfor %}
+  document_type: syslog
+
+output.logstash:
+  hosts: ["{{ logstash_host }}:{{ logstash_port }}"]

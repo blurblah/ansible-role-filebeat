@@ -1,0 +1,23 @@
+---
+- name: Install java8 on centos
+  yum:
+    name: java-1.8.0-openjdk
+    update_cache: yes
+
+- name: Add gpg-key on centos
+  rpm_key:
+    key: https://packages.elastic.co/GPG-KEY-elasticsearch
+
+- name: Add repository on centos
+  yum_repository:
+    name: elastic-5.x
+    description: Elastic repository for 5.x packages
+    baseurl: https://artifacts.elastic.co/packages/5.x/yum
+    gpgcheck: yes
+    gpgkey : https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    enabled: yes
+
+- name: Install filebeat on centos
+  yum:
+    name: filebeat
+    update_cache: yes

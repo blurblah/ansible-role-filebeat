@@ -1,0 +1,22 @@
+---
+- include: check_system.yml
+- include: check_variables.yml
+
+- include: install_filebeat_ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- include: install_filebeat_centos.yml
+  when: ansible_distribution == 'CentOS'
+
+- name: Replace filebeat.yml
+  template:
+    src: filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+    mode: 0644
+
+- name: Start services
+  systemd:
+    daemon_reload: yes
+    name: filebeat
+    enabled: yes
+    state: restarted
