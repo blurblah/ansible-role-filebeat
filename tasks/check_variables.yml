@@ -4,7 +4,7 @@
     msg: Undefined variables logstash_host and logstash_port
   when: logstash_host is undefined or logstash_port is undefined
   
-- name: Check log_list
+- name: Check prospectors
   fail:
-    msg: Undefined variables log_list
-  when: log_list is undefined
+    msg: Undefined variables prospectors
+  when: prospectors is undefined
