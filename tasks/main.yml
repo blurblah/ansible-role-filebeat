@@ -1,11 +1,11 @@
 ---
-- include: check_system.yml
-- include: check_variables.yml
+- import_tasks: check_system.yml
+- import_tasks: check_variables.yml
 
-- include: install_filebeat_ubuntu.yml
+- include_tasks: install_filebeat_ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
-- include: install_filebeat_centos.yml
+- include_tasks: install_filebeat_centos.yml
   when: ansible_distribution == 'CentOS'
 
 - name: Get a short hostname
