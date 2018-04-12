@@ -1,2 +1,4 @@
 ---
 max_retries: -1
+version: 6.x
+enable_kibana_dashboard: false

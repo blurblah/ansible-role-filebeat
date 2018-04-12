@@ -14,7 +14,7 @@
 - name: check ubuntu version
   fail:
     msg: "Not supported {{ ansible_distribution }} {{ ansible_distribution_version }}"
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version != '16.04'
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version not in ['12.04', '14.04', '16.04']
 
 # check centos 7
 - name: check centos version

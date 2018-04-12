@@ -15,6 +15,9 @@ filebeat.prospectors:
   fields:
     timezone: {{ timezone }}
 {% endif %}
+{% if prospector.clean_inactive is defined %}
+  clean_inactive: {{ prospector.clean_inactive }}
+{% endif %}
 {% if prospector.ignore_older is defined %}
   ignore_older: {{ prospector.ignore_older }}
 {% endif %}
@@ -24,3 +27,8 @@ filebeat.prospectors:
 output.logstash:
   hosts: ["{{ logstash_host }}:{{ logstash_port }}"]
   max_retries: {{ max_retries }}
+
+{% if enable_kibana_dashboard %}
+setup.kibana.host: "{{ kibana_host }}:{{ kibana_port }}"
+setup.dashboards.enabled: true
+{% endif %}

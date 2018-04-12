@@ -3,6 +3,28 @@
   apt:
     name: openjdk-8-jdk
     update_cache: yes
+  when: ansible_distribution_version == '16.04'
+
+- name: Add oracle java8 repository
+  apt_repository:
+    repo: 'ppa:webupd8team/java'
+    update_cache: yes
+  when: ansible_distribution_version != '16.04'
+
+- name: Set acceptance value before installing oracle java8
+  debconf:
+    name: oracle-java8-installer
+    question: shared/accepted-oracle-license-v1-1
+    value: true
+    vtype: boolean
+  when: ansible_distribution_version != '16.04'
+
+- name: Install oracle-java8-installer
+  apt: name={{ item }}
+  with_items:
+    - oracle-java8-installer
+    - oracle-java8-set-default
+  when: ansible_distribution_version != '16.04'
 
 - name: Add gpg-key on ubuntu
   apt_key:
@@ -10,7 +32,7 @@
 
 - name: Add repository on ubuntu
   apt_repository:
-    repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
+    repo: 'deb https://artifacts.elastic.co/packages/{{ version }}/apt stable main'
 
 - name: Install filebeat on ubuntu
   apt: name=filebeat
