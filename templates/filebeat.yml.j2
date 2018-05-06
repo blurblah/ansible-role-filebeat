@@ -1,4 +1,12 @@
 name: {{ filebeat_name }}
+
+{% if modules is defined %}
+filebeat.modules:
+{% for module in modules %}
+- module: {{ module }}
+{% endfor %}
+{% endif %}
+
 filebeat.prospectors:
 {% for prospector in prospectors %}
 - input_type: log
@@ -11,8 +19,9 @@ filebeat.prospectors:
   multiline.negate: {{ prospector.multiline.negate }}
   multiline.match: {{ prospector.multiline.match }}
 {% endif %}
-{% if timezone is defined %}
   fields:
+    document_type: {{ prospector.type }}
+{% if timezone is defined %}
     timezone: {{ timezone }}
 {% endif %}
 {% if prospector.clean_inactive is defined %}
@@ -21,7 +30,6 @@ filebeat.prospectors:
 {% if prospector.ignore_older is defined %}
   ignore_older: {{ prospector.ignore_older }}
 {% endif %}
-  document_type: {{ prospector.type }}
 {% endfor %}
 
 output.logstash:
