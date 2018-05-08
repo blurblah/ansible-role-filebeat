@@ -3,3 +3,4 @@ max_retries: -1
 version: 6.x
 enable_kibana_dashboard: false
 filebeat_name: '{{ inventory_hostname }}'
+enable_docker_logs: false

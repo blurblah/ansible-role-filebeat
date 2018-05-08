@@ -31,6 +31,17 @@ filebeat.prospectors:
   ignore_older: {{ prospector.ignore_older }}
 {% endif %}
 {% endfor %}
+{% if enable_docker_logs %}
+- type: log
+  paths:
+    - '/var/lib/docker/containers/*/*.log'
+  json.message_key: log
+  json.keys_under_root: true
+  processors:
+    - add_docker_metadata: ~
+  fields:
+    document_type: docker
+{% endif %}
 
 output.logstash:
   hosts: ["{{ logstash_host }}:{{ logstash_port }}"]
